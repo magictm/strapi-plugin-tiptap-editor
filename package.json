@@ -1,5 +1,5 @@
 {
-    "name": "strapi-plugin-tiptap",
+    "name": "@magictm/strapi-plugin-tiptap",
     "version": "0.1.0",
     "description": "Replaces default Strapi editor with TipTap editor.",
     "strapi": {
@@ -55,5 +55,5 @@
         "node": ">=14.19.1 <=18.x.x",
         "npm": ">=6.0.0"
     },
-    "license": "MIT"
+    "license": "LGPL-2.1"
 }
