@@ -39,7 +39,39 @@ export default styled(Box)`
                 }
             }
         }
+
+        .debug-button {
+            > span {
+                margin-right: 0.5rem;
+            }
+        }
     }
+
+    .debug-wrapper {
+        position: relative;
+        .tab-wrapper {
+        }
+        .json-preview,
+        .html-preview {
+            pre {
+                code {
+                    position: relative;
+                    font-family: monospace;
+                    font-size: 1rem;
+                    display: block;
+                    background: none;
+                    white-space: pre;
+                    -webkit-overflow-scrolling: touch;
+                    overflow-x: scroll;
+                    overflow-y: scroll;
+                    max-width: 100%;
+                    min-width: 100px;
+                    padding: 0;
+                }
+            }
+        }
+    }
+
     .ProseMirror {
         outline: none;
         line-height: 1.25rem;

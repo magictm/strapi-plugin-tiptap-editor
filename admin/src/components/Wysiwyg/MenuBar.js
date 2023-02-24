@@ -5,14 +5,39 @@ import {
     IconButtonGroup,
     Option,
     Select,
+    Button,
+    Switch,
+    Typography,
+    Dialog,
+    DialogBody,
+    DialogFooter,
+    Stack,
+    TextInput,
 } from '@strapi/design-system'
 import {
     Bold as BoldIcon,
     Italic as ItalicIcon,
     StrikeThrough as StrikeThroughIcon,
     Underline as UnderlineIcon,
+    BulletList as BulletListIcon,
+    NumberList as NumberListIcon,
+    Code as CodeIcon,
+    Link as LinkIcon,
 } from '@strapi/icons'
-import React from 'react'
+import {
+    AiOutlineAlignCenter,
+    AiOutlineAlignLeft,
+    AiOutlineAlignRight,
+    AiOutlineTable,
+    AiFillYoutube,
+    AiOutlineLine,
+} from 'react-icons/ai'
+import { GrBlockQuote as GrBlockQuoteIcon } from 'react-icons/gr'
+import {
+    HiArrowUturnLeft as UndoIcon,
+    HiArrowUturnRight as RedoIcon,
+} from 'react-icons/hi2'
+import React, { useState } from 'react'
 
 const onHeadingChange = (editor, type) => {
     switch (type) {
@@ -34,7 +59,42 @@ const onHeadingChange = (editor, type) => {
     }
 }
 
-const MenuBar = ({ editor }) => {
+const MenuBar = ({ editor, debug, setDebug, playground }) => {
+    const [isVisibleLinkDialog, setIsVisibleLinkDialog] = useState(false)
+    const [linkInput, setLinkInput] = useState('')
+    const [linkTargetInput, setLinkTargetInput] = useState('')
+
+    const onInsertLink = () => {
+        // Empty
+        if (linkInput === '') {
+            editor.chain().focus().extendMarkRange('link').unsetLink().run()
+        } else {
+            // Update link
+            editor
+                .chain()
+                .focus()
+                .extendMarkRange('link')
+                .setLink({ href: linkInput, target: linkTargetInput })
+                .run()
+        }
+
+        // Reset dialog
+        setIsVisibleLinkDialog(false)
+        setLinkInput('')
+        setLinkTargetInput('')
+    }
+
+    const openLinkDialog = () => {
+        const previousUrl = editor.getAttributes('link').href
+        const previousTarget = editor.getAttributes('link').target
+
+        // Update fields before showing dialog
+        if (previousUrl) setLinkInput(previousUrl)
+        if (previousTarget) setLinkTargetInput(previousTarget)
+
+        setIsVisibleLinkDialog(true)
+    }
+
     if (!editor) {
         return null
     }
@@ -50,215 +110,274 @@ const MenuBar = ({ editor }) => {
     if (editor.isActive('paragraph')) selectedTextStyle = 'paragraph'
 
     return (
-        <div>
-            <Box padding={2} background="neutral100" className="menubar">
-                <Flex justifyContent="space-between">
-                    <Flex style={{ flexWrap: 'wrap' }}>
-                        <Box className="button-group">
-                            <Select
-                                required
-                                size="S"
-                                placeholder="Text style"
-                                onChange={(val) => onHeadingChange(editor, val)}
-                                value={selectedTextStyle}
-                            >
-                                <Option value={'paragraph'}>Paragraph</Option>
-                                <Option value={'h1'}>Heading 1</Option>
-                                <Option value={'h2'}>Heading 2</Option>
-                                <Option value={'h3'}>Heading 3</Option>
-                                <Option value={'h4'}>Heading 4</Option>
-                                <Option value={'h5'}>Heading 5</Option>
-                                <Option value={'h6'}>Heading 6</Option>
-                            </Select>
-                        </Box>
+        <Box padding={2} background="neutral100" className="menubar">
+            <Flex justifyContent="space-between">
+                <Flex style={{ flexWrap: 'wrap' }}>
+                    <Box className="button-group">
+                        <Select
+                            required
+                            size="S"
+                            placeholder="Text style"
+                            onChange={(val) => onHeadingChange(editor, val)}
+                            value={selectedTextStyle}
+                        >
+                            <Option value={'paragraph'}>Paragraph</Option>
+                            <Option value={'h1'}>Heading 1</Option>
+                            <Option value={'h2'}>Heading 2</Option>
+                            <Option value={'h3'}>Heading 3</Option>
+                            <Option value={'h4'}>Heading 4</Option>
+                            <Option value={'h5'}>Heading 5</Option>
+                            <Option value={'h6'}>Heading 6</Option>
+                        </Select>
+                    </Box>
 
-                        <IconButtonGroup className="button-group">
-                            <IconButton
-                                icon={<BoldIcon />}
-                                label="Bold"
-                                onClick={() =>
-                                    editor.chain().focus().toggleBold().run()
-                                }
-                                disabled={
-                                    !editor.can().chain().focus().toggleBold().run()
-                                }
-                                className={
-                                    editor.isActive('bold') ? 'is-active' : ''
-                                }
-                            />
-                            <IconButton
-                                icon={<ItalicIcon />}
-                                label="Italic"
-                                onClick={() =>
-                                    editor.chain().focus().toggleItalic().run()
-                                }
-                                disabled={
-                                    !editor
-                                        .can()
-                                        .chain()
-                                        .focus()
-                                        .toggleItalic()
-                                        .run()
-                                }
-                                className={
-                                    editor.isActive('italic') ? 'is-active' : ''
-                                }
-                            />
-                            <IconButton
-                                icon={<StrikeThroughIcon />}
-                                label="Strikethrough"
-                                onClick={() =>
-                                    editor.chain().focus().toggleStrike().run()
-                                }
-                                disabled={
-                                    !editor
-                                        .can()
-                                        .chain()
-                                        .focus()
-                                        .toggleStrike()
-                                        .run()
-                                }
-                                className={
-                                    editor.isActive('strike') ? 'is-active' : ''
-                                }
-                            />
-                            <IconButton
-                                icon={<UnderlineIcon />}
-                                label="Underline"
-                                className={
-                                    editor.isActive('underline') ? 'is-active' : ''
-                                }
-                                onClick={() =>
-                                    editor.chain().focus().toggleUnderline().run()
-                                }
-                            />
-                        </IconButtonGroup>
-                    </Flex>
+                    <IconButtonGroup className="button-group">
+                        <IconButton
+                            icon={<BoldIcon />}
+                            label="Bold"
+                            onClick={() => editor.chain().focus().toggleBold().run()}
+                            disabled={
+                                !editor.can().chain().focus().toggleBold().run()
+                            }
+                            className={editor.isActive('bold') ? 'is-active' : ''}
+                        />
+                        <IconButton
+                            icon={<ItalicIcon />}
+                            label="Italic"
+                            onClick={() =>
+                                editor.chain().focus().toggleItalic().run()
+                            }
+                            disabled={
+                                !editor.can().chain().focus().toggleItalic().run()
+                            }
+                            className={editor.isActive('italic') ? 'is-active' : ''}
+                        />
+                        <IconButton
+                            icon={<StrikeThroughIcon />}
+                            label="Strikethrough"
+                            onClick={() =>
+                                editor.chain().focus().toggleStrike().run()
+                            }
+                            disabled={
+                                !editor.can().chain().focus().toggleStrike().run()
+                            }
+                            className={editor.isActive('strike') ? 'is-active' : ''}
+                        />
+                        <IconButton
+                            icon={<UnderlineIcon />}
+                            label="Underline"
+                            className={
+                                editor.isActive('underline') ? 'is-active' : ''
+                            }
+                            onClick={() =>
+                                editor.chain().focus().toggleUnderline().run()
+                            }
+                        />
+                    </IconButtonGroup>
+
+                    <IconButtonGroup className="button-group">
+                        <IconButton
+                            icon={<AiOutlineAlignLeft />}
+                            label="Align left"
+                            className={'large-icon'}
+                            onClick={() =>
+                                editor.chain().focus().setTextAlign('left').run()
+                            }
+                        />
+                        <IconButton
+                            icon={<AiOutlineAlignCenter />}
+                            label="Align center"
+                            className={'large-icon'}
+                            onClick={() =>
+                                editor.chain().focus().setTextAlign('center').run()
+                            }
+                        />
+                        <IconButton
+                            icon={<AiOutlineAlignRight />}
+                            label="Align right"
+                            className={'large-icon'}
+                            onClick={() =>
+                                editor.chain().focus().setTextAlign('right').run()
+                            }
+                        />
+                    </IconButtonGroup>
+
+                    <IconButtonGroup className="button-group">
+                        <IconButton
+                            icon={<BulletListIcon />}
+                            label="Bullet list"
+                            className={[
+                                'large-icon',
+                                editor.isActive('bulletList') ? 'is-active' : '',
+                            ]}
+                            onClick={() =>
+                                editor.chain().focus().toggleBulletList().run()
+                            }
+                        />
+                        <IconButton
+                            icon={<NumberListIcon />}
+                            label="Ordered list"
+                            className={[
+                                'large-icon',
+                                editor.isActive('orderedList') ? 'is-active' : '',
+                            ]}
+                            onClick={() =>
+                                editor.chain().focus().toggleOrderedList().run()
+                            }
+                        />
+                    </IconButtonGroup>
+
+                    <IconButtonGroup className="button-group">
+                        <IconButton
+                            icon={<CodeIcon />}
+                            label="Code"
+                            className={[
+                                'large-icon',
+                                editor.isActive('codeBlock') ? 'is-active' : '',
+                            ]}
+                            onClick={() =>
+                                editor.chain().focus().toggleCodeBlock().run()
+                            }
+                        />
+
+                        <IconButton
+                            icon={<GrBlockQuoteIcon />}
+                            label="Blockquote"
+                            className={[
+                                'large-icon',
+                                editor.isActive('blockquote') ? 'is-active' : '',
+                            ]}
+                            onClick={() =>
+                                editor.chain().focus().toggleBlockquote().run()
+                            }
+                        />
+
+                        <IconButton
+                            icon={<AiOutlineTable />}
+                            label="Table"
+                            className={[
+                                'large-icon',
+                                editor.isActive('table') ? 'is-active' : '',
+                            ]}
+                            onClick={() =>
+                                editor
+                                    .chain()
+                                    .focus()
+                                    .insertTable({
+                                        cols: 3,
+                                        row: 3,
+                                        withHeaderRow: false,
+                                    })
+                                    .run()
+                            }
+                        />
+
+                        <IconButton
+                            icon={<AiOutlineLine />}
+                            label="Horizontal line"
+                            className={['large-icon']}
+                            onClick={() =>
+                                editor.chain().focus().setHorizontalRule().run()
+                            }
+                        />
+
+                        <IconButton
+                            icon={<LinkIcon />}
+                            label="Link"
+                            className={[
+                                'medium-icon',
+                                editor.isActive('link') ? 'is-active' : '',
+                            ]}
+                            onClick={() => openLinkDialog()}
+                        />
+                    </IconButtonGroup>
+
+                    <IconButtonGroup className="button-group">
+                        <IconButton
+                            icon={<UndoIcon />}
+                            label="Undo"
+                            className={['large-icon']}
+                            onClick={() => editor.chain().focus().undo().run()}
+                            disabled={!editor.can().chain().focus().undo().run()}
+                        />
+                        <IconButton
+                            icon={<RedoIcon />}
+                            label="Redo"
+                            className={['large-icon']}
+                            onClick={() => editor.chain().focus().redo().run()}
+                            disabled={!editor.can().chain().focus().redo().run()}
+                        />
+                    </IconButtonGroup>
                 </Flex>
-            </Box>
+                {playground && (
+                    <Flex className={'debug-button'}>
+                        <Typography>Debug: </Typography>
+                        <Switch
+                            label="Toggle debug mode"
+                            selected={debug}
+                            onChange={() => setDebug((x) => !x)}
+                            visibleLabels={false}
+                        />
+                        {/* <Button>Get JSON</Button>
+                        <Button>Get HTML</Button> */}
+                    </Flex>
+                )}
+            </Flex>
 
-            <button
-                onClick={() => editor.chain().focus().toggleCode().run()}
-                disabled={!editor.can().chain().focus().toggleCode().run()}
-                className={editor.isActive('code') ? 'is-active' : ''}
+            <Dialog
+                onClose={() => setIsVisibleLinkDialog(false)}
+                title="Insert link"
+                isOpen={isVisibleLinkDialog}
             >
-                code
-            </button>
-            <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
-                clear marks
-            </button>
-            <button onClick={() => editor.chain().focus().clearNodes().run()}>
-                clear nodes
-            </button>
-            <button
-                onClick={() => editor.chain().focus().setParagraph().run()}
-                className={editor.isActive('paragraph') ? 'is-active' : ''}
-            >
-                paragraph
-            </button>
-            <button
-                onClick={() =>
-                    editor.chain().focus().toggleHeading({ level: 1 }).run()
-                }
-                className={
-                    editor.isActive('heading', { level: 1 }) ? 'is-active' : ''
-                }
-            >
-                h1
-            </button>
-            <button
-                onClick={() =>
-                    editor.chain().focus().toggleHeading({ level: 2 }).run()
-                }
-                className={
-                    editor.isActive('heading', { level: 2 }) ? 'is-active' : ''
-                }
-            >
-                h2
-            </button>
-            <button
-                onClick={() =>
-                    editor.chain().focus().toggleHeading({ level: 3 }).run()
-                }
-                className={
-                    editor.isActive('heading', { level: 3 }) ? 'is-active' : ''
-                }
-            >
-                h3
-            </button>
-            <button
-                onClick={() =>
-                    editor.chain().focus().toggleHeading({ level: 4 }).run()
-                }
-                className={
-                    editor.isActive('heading', { level: 4 }) ? 'is-active' : ''
-                }
-            >
-                h4
-            </button>
-            <button
-                onClick={() =>
-                    editor.chain().focus().toggleHeading({ level: 5 }).run()
-                }
-                className={
-                    editor.isActive('heading', { level: 5 }) ? 'is-active' : ''
-                }
-            >
-                h5
-            </button>
-            <button
-                onClick={() =>
-                    editor.chain().focus().toggleHeading({ level: 6 }).run()
-                }
-                className={
-                    editor.isActive('heading', { level: 6 }) ? 'is-active' : ''
-                }
-            >
-                h6
-            </button>
-            <button
-                onClick={() => editor.chain().focus().toggleBulletList().run()}
-                className={editor.isActive('bulletList') ? 'is-active' : ''}
-            >
-                bullet list
-            </button>
-            <button
-                onClick={() => editor.chain().focus().toggleOrderedList().run()}
-                className={editor.isActive('orderedList') ? 'is-active' : ''}
-            >
-                ordered list
-            </button>
-            <button
-                onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-                className={editor.isActive('codeBlock') ? 'is-active' : ''}
-            >
-                code block
-            </button>
-            <button
-                onClick={() => editor.chain().focus().toggleBlockquote().run()}
-                className={editor.isActive('blockquote') ? 'is-active' : ''}
-            >
-                blockquote
-            </button>
-            <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
-                horizontal rule
-            </button>
-            <button onClick={() => editor.chain().focus().setHardBreak().run()}>
-                hard break
-            </button>
-            <button
-                onClick={() => editor.chain().focus().undo().run()}
-                disabled={!editor.can().chain().focus().undo().run()}
-            >
-                undo
-            </button>
-            <button
-                onClick={() => editor.chain().focus().redo().run()}
-                disabled={!editor.can().chain().focus().redo().run()}
-            >
-                redo
-            </button>
-        </div>
+                <DialogBody>
+                    <Stack spacing={2}>
+                        <TextInput
+                            label="Link URL"
+                            placeholder="Write or paste the url here"
+                            name="url"
+                            onChange={(e) => setLinkInput(e.target.value)}
+                            value={linkInput}
+                            aria-label="URL"
+                        />
+                        <Select
+                            id="linkTargetSelect"
+                            label="Link target"
+                            required
+                            placeholder="Select link target"
+                            value={linkTargetInput}
+                            onChange={setLinkTargetInput}
+                        >
+                            <Option value={'_self'}>Self</Option>
+                            <Option value={'_blank'}>Blank</Option>
+                            <Option value={'_parent'}>Parent</Option>
+                            <Option value={'_top'}>Top</Option>
+                        </Select>
+                    </Stack>
+                </DialogBody>
+                <DialogFooter
+                    startAction={
+                        <Button
+                            onClick={() => {
+                                setLinkInput('')
+                                setLinkTargetInput('')
+                                setIsVisibleLinkDialog(false)
+                            }}
+                            variant="tertiary"
+                        >
+                            Cancel
+                        </Button>
+                    }
+                    endAction={
+                        <Button
+                            onClick={() => onInsertLink()}
+                            variant="success-light"
+                        >
+                            Insert link
+                        </Button>
+                    }
+                />
+            </Dialog>
+        </Box>
     )
 }
 
