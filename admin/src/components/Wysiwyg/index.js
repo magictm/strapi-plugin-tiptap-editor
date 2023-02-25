@@ -2,7 +2,14 @@ import PropTypes from 'prop-types'
 import React, { useState, useEffect } from 'react'
 import Wrapper from './style'
 
-import { Box, Stack, Flex, Field, Typography } from '@strapi/design-system'
+import {
+    Box,
+    Stack,
+    Flex,
+    Field,
+    Typography,
+    FieldLabel,
+} from '@strapi/design-system'
 import { useIntl } from 'react-intl'
 import MenuBar from './MenuBar'
 import EditorDebug from './EditorDebug'
@@ -39,27 +46,35 @@ import CodeBlockExtension from '@tiptap/extension-code-block'
 import HardBreakExtension from '@tiptap/extension-hard-break'
 import HighlightExtension from '@tiptap/extension-highlight'
 import HorizontalRuleExtension from '@tiptap/extension-horizontal-rule'
+import CharacterCounter from './CharacterCounter'
 
-const Wysiwyg = ({
-    hint,
-    disabled,
-    error,
-    intlLabel,
-    labelAction,
-    name,
-    onChange,
-    placeholder,
-    value,
-    required,
-    playground,
-}) => {
+const Wysiwyg = (opts) => {
+    const {
+        hint,
+        disabled,
+        error,
+        intlLabel,
+        labelAction,
+        name,
+        onChange,
+        placeholder,
+        value,
+        required,
+        playground,
+        description,
+        attribute,
+    } = opts
+
+    // Debug
+    console.log('opts', opts)
+
     const { formatMessage } = useIntl()
     const [mediaLibVisible, setMediaLibVisible] = useState(false)
     const [debug, setDebug] = useState(false)
     const [hasDebug, setHasDebug] = useState(false)
     const [content, setContent] = useState('')
 
-    const characterLimit = 240
+    const characterLimit = attribute?.maxLength || 0
 
     const handleToggleMediaLib = () => setMediaLibVisible((prev) => !prev)
 
@@ -129,19 +144,15 @@ const Wysiwyg = ({
         },
     })
 
-    let percentage = editor
-        ? Math.round(
-              (100 / characterLimit) * editor.storage.characterCount.characters(),
-          )
-        : 0
-
-    const characterLimitReached = editor
-        ? editor.storage.characterCount.characters() === characterLimit
-        : false
-
     return (
         <Field required={required}>
             <Stack spacing={1}>
+                <Box>
+                    <FieldLabel action={labelAction}>
+                        {' '}
+                        {formatMessage(intlLabel)}
+                    </FieldLabel>
+                </Box>
                 <Wrapper>
                     <Flex gap={1} alignItems={'flex-start'}>
                         <Box hasRadius overflow={'hidden'} style={{ flex: '1' }}>
@@ -163,61 +174,10 @@ const Wysiwyg = ({
                             </Box>
 
                             {editor && (
-                                <Box
-                                    marginTop={2}
-                                    className={[
-                                        'character-count',
-                                        characterLimitReached
-                                            ? 'character-count--warning'
-                                            : '',
-                                    ]}
-                                >
-                                    <Flex>
-                                        <Box marginRight={2}>
-                                            <svg
-                                                height="20"
-                                                width="20"
-                                                viewBox="0 0 20 20"
-                                                className="character-count__graph"
-                                            >
-                                                <circle
-                                                    className="character-count__background-cirle"
-                                                    r="10"
-                                                    cx="10"
-                                                    cy="10"
-                                                    fill="currentColor"
-                                                />
-                                                <circle
-                                                    r="5"
-                                                    cx="10"
-                                                    cy="10"
-                                                    fill="transparent"
-                                                    stroke="currentColor"
-                                                    strokeWidth="10"
-                                                    strokeDasharray={`calc(${percentage} * 31.4 / 100) 31.4`}
-                                                    transform="rotate(-90) translate(-20)"
-                                                />
-                                                <circle
-                                                    r="6"
-                                                    cx="10"
-                                                    cy="10"
-                                                    fill="white"
-                                                />
-                                            </svg>
-                                        </Box>
-                                        <Box>
-                                            <Typography>
-                                                {editor.storage.characterCount.characters()}
-                                                /{characterLimit} characters
-                                            </Typography>
-                                            <br />
-                                            <Typography>
-                                                {editor.storage.characterCount.words()}{' '}
-                                                words
-                                            </Typography>
-                                        </Box>
-                                    </Flex>
-                                </Box>
+                                <CharacterCounter
+                                    editor={editor}
+                                    characterLimit={characterLimit}
+                                />
                             )}
                         </Box>
                         {debug && playground && (
@@ -234,6 +194,16 @@ const Wysiwyg = ({
                         )}
                     </Flex>
                 </Wrapper>
+                {error && (
+                    <Typography variant="pi" textColor="danger600">
+                        {formatMessage({ id: error, defaultMessage: error })}
+                    </Typography>
+                )}
+                {description && (
+                    <Typography variant="pi">
+                        {formatMessage(description)}
+                    </Typography>
+                )}
             </Stack>
         </Field>
     )
@@ -248,6 +218,7 @@ Wysiwyg.defaultProps = {
     required: false,
     value: '',
     hint: '',
+    description: null,
 }
 
 Wysiwyg.propTypes = {
@@ -270,6 +241,10 @@ Wysiwyg.propTypes = {
     }),
     required: PropTypes.bool,
     value: PropTypes.string,
+    description: PropTypes.shape({
+        id: PropTypes.string,
+        defaultMessage: PropTypes.string,
+    }),
 }
 
 export default Wysiwyg

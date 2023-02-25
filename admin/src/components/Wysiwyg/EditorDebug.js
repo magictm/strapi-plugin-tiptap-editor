@@ -9,7 +9,11 @@ import {
     TabPanels,
     Tabs,
     Typography,
+    NumberInput,
+    Tooltip,
+    Status,
 } from '@strapi/design-system'
+import { Information as InformationIcon } from '@strapi/icons'
 import {
     knowledgeBaseArticleData,
     simpleData,
@@ -29,6 +33,7 @@ import React, { useState } from 'react'
 const EditorDebug = ({ editor }) => {
     const defaultDataSet = 'simple'
     const [selectedDataSet, setSelectedDataSet] = useState(defaultDataSet)
+    const [characterLimit, setCharacterLimit] = useState(0)
 
     const insertEditorContent = () => {
         let dataset = simpleData
@@ -89,7 +94,64 @@ const EditorDebug = ({ editor }) => {
                 <TabPanels>
                     <TabPanel>
                         <Box color="neutral800" padding={4} background="neutral0">
+                            <Box marginBottom={2}>
+                                <Status
+                                    variant="secondary"
+                                    size="S"
+                                    showBullet={false}
+                                >
+                                    <Typography
+                                        fontWeight="bold"
+                                        textColor="alternative700"
+                                    >
+                                        ⚠ This section is under development.
+                                    </Typography>
+                                </Status>
+                            </Box>
                             <Box>
+                                <NumberInput
+                                    placeholder="240"
+                                    label="Character limit"
+                                    name="character-limit"
+                                    hint="Limit the number of characters in your editor."
+                                    size="S"
+                                    error={undefined}
+                                    onValueChange={(value) =>
+                                        setCharacterLimit(value)
+                                    }
+                                    value={characterLimit}
+                                    labelAction={
+                                        <Tooltip description="0 - unlimited characters">
+                                            <button
+                                                aria-label="Information about the character limit"
+                                                style={{
+                                                    border: 'none',
+                                                    padding: 0,
+                                                    background: 'transparent',
+                                                }}
+                                            >
+                                                <InformationIcon aria-hidden />
+                                            </button>
+                                        </Tooltip>
+                                    }
+                                />
+                                {characterLimit > 0 && (
+                                    <Box
+                                        as="p"
+                                        padding={4}
+                                        marginTop={2}
+                                        background="neutral100"
+                                    >
+                                        <Typography>
+                                            If you cannot insert dataset, please
+                                            check if the character limit is set
+                                            correctly. Too low character limit will
+                                            prevent data set from beeing inserted.
+                                        </Typography>
+                                    </Box>
+                                )}
+                            </Box>
+                            <Box marginTop={4}>
                                 <Typography variant="delta">
                                     Insert content
                                 </Typography>
@@ -148,11 +210,6 @@ const EditorDebug = ({ editor }) => {
                             <Button onClick={insertEditorContent}>
                                 Insert content
                             </Button>
-                            <Box marginTop={2}>
-                                <Typography>
-                                    ⚠ This section is under development.
-                                </Typography>
-                            </Box>
                         </Box>
                     </TabPanel>
                     <TabPanel>
