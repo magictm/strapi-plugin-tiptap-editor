@@ -38,6 +38,7 @@ import {
     HiArrowUturnLeft as UndoIcon,
     HiArrowUturnRight as RedoIcon,
 } from 'react-icons/hi2'
+import { FaRemoveFormat as RemoveFormatIcon } from 'react-icons/fa'
 import React, { useState } from 'react'
 
 const onHeadingChange = (editor, type) => {
@@ -257,14 +258,6 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
                             onClick={() =>
                                 editor.chain().focus().toggleBulletList().run()
                             }
-                            disabled={
-                                !editor
-                                    .can()
-                                    .chain()
-                                    .focus()
-                                    .toggleBulletList()
-                                    .run()
-                            }
                         />
                         <IconButton
                             icon={<NumberListIcon />}
@@ -275,14 +268,6 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
                             ]}
                             onClick={() =>
                                 editor.chain().focus().toggleOrderedList().run()
-                            }
-                            disabled={
-                                !editor
-                                    .can()
-                                    .chain()
-                                    .focus()
-                                    .toggleOrderedList()
-                                    .run()
                             }
                         />
                     </IconButtonGroup>
@@ -309,9 +294,6 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
                             ]}
                             onClick={() =>
                                 editor.chain().focus().toggleCodeBlock().run()
-                            }
-                            disabled={
-                                !editor.can().chain().focus().toggleCodeBlock().run()
                             }
                         />
 
@@ -365,8 +347,17 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
                             ]}
                             onClick={() => openLinkDialog()}
                         />
+                        <IconButton
+                            icon={<RemoveFormatIcon />}
+                            label="Remove formating"
+                            className={['large-icon']}
+                            onClick={() => {
+                                editor.chain().focus().clearNodes().run()
+                            }}
+                        />
                     </IconButtonGroup>
 
+                    {/* UNDO / REDO */}
                     <IconButtonGroup className="button-group">
                         <IconButton
                             icon={<UndoIcon />}
