@@ -1,5 +1,5 @@
 {
-    "name": "@magictm/strapi-plugin-tiptap",
+    "name": "@magictm/strapi-plugin-tiptap-editor",
     "version": "0.1.0",
     "description": "Replaces default Strapi editor with TipTap editor.",
     "strapi": {

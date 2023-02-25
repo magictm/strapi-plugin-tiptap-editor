@@ -27,7 +27,8 @@ import {
 import React, { useState } from 'react'
 
 const EditorDebug = ({ editor }) => {
-    const [selectedDataSet, setSelectedDataSet] = useState('simple')
+    const defaultDataSet = 'simple'
+    const [selectedDataSet, setSelectedDataSet] = useState(defaultDataSet)
 
     const insertEditorContent = () => {
         let dataset = simpleData
@@ -110,7 +111,9 @@ const EditorDebug = ({ editor }) => {
                                     size="S"
                                     placeholder="Data set"
                                     value={selectedDataSet}
-                                    onClear={() => setSelectedDataSet('simple')}
+                                    onClear={() =>
+                                        setSelectedDataSet(defaultDataSet)
+                                    }
                                     onChange={setSelectedDataSet}
                                 >
                                     <Option value={'simple'}>Simple</Option>

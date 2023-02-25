@@ -6,7 +6,33 @@ export default styled(Box)`
         // Debug
         // console.log(theme)
     }}
+
+    .editor-content-wrapper {
+        border-width: 1px;
+        border-color: ${({ theme }) => theme.colors.neutral200};
+        border-style: solid;
+        border-bottom-right-radius: ${({ theme }) => theme.spaces[1]};
+        border-bottom-left-radius: ${({ theme }) => theme.spaces[1]};
+    }
+
+    .character-count {
+        color: ${({ theme }) => theme.colors.primary500};
+
+        &--warning {
+            color: ${({ theme }) => theme.colors.danger500};
+        }
+
+        &__background-cirle {
+            color: ${({ theme }) => theme.colors.neutral200};
+        }
+    }
+
     .menubar {
+        border-width: 1px;
+        border-bottom: 0;
+        border-top-right-radius: ${({ theme }) => theme.spaces[1]};
+        border-top-left-radius: ${({ theme }) => theme.spaces[1]};
+
         svg {
             color: currentColor;
         }
@@ -150,8 +176,13 @@ export default styled(Box)`
             display: block;
         }
         blockquote {
-            padding-left: 1rem;
-            border-left: 2px solid rgba(#0d0d0d, 0.1);
+            border-left: 5px solid ${({ theme }) => theme.colors.neutral200};
+            font-style: italic;
+            margin-left: 0;
+            margin-right: 0;
+            overflow: hidden;
+            padding-left: 1.5em;
+            padding-right: 1.5em;
         }
         hr {
             border: 0;

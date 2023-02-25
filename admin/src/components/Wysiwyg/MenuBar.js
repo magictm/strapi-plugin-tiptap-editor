@@ -110,7 +110,13 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
     if (editor.isActive('paragraph')) selectedTextStyle = 'paragraph'
 
     return (
-        <Box padding={2} background="neutral100" className="menubar">
+        <Box
+            padding={2}
+            background="neutral100"
+            borderStyle="solid"
+            borderColor="neutral200"
+            className="menubar"
+        >
             <Flex justifyContent="space-between">
                 <Flex style={{ flexWrap: 'wrap' }}>
                     <Box className="button-group">

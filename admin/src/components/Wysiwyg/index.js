@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { useState, useEffect } from 'react'
 import Wrapper from './style'
 
-import { Box, Stack, Flex, Field } from '@strapi/design-system'
+import { Box, Stack, Flex, Field, Typography } from '@strapi/design-system'
 import { useIntl } from 'react-intl'
 import MenuBar from './MenuBar'
 import EditorDebug from './EditorDebug'
@@ -38,6 +38,7 @@ import BlockquoteExtension from '@tiptap/extension-blockquote'
 import CodeBlockExtension from '@tiptap/extension-code-block'
 import HardBreakExtension from '@tiptap/extension-hard-break'
 import HighlightExtension from '@tiptap/extension-highlight'
+import HorizontalRuleExtension from '@tiptap/extension-horizontal-rule'
 
 const Wysiwyg = ({
     hint,
@@ -57,6 +58,8 @@ const Wysiwyg = ({
     const [debug, setDebug] = useState(false)
     const [hasDebug, setHasDebug] = useState(false)
     const [content, setContent] = useState('')
+
+    const characterLimit = 240
 
     const handleToggleMediaLib = () => setMediaLibVisible((prev) => !prev)
 
@@ -89,8 +92,12 @@ const Wysiwyg = ({
             TextStyleExtension,
             BlockquoteExtension,
             CodeBlockExtension,
+            CodeExtension,
             HardBreakExtension,
-            CharacterCountExtension.configure(),
+            HorizontalRuleExtension,
+            CharacterCountExtension.configure({
+                limit: characterLimit,
+            }),
 
             PlaceholderExtension.configure({
                 placeholder: ({ node }) => {
@@ -122,19 +129,22 @@ const Wysiwyg = ({
         },
     })
 
+    let percentage = editor
+        ? Math.round(
+              (100 / characterLimit) * editor.storage.characterCount.characters(),
+          )
+        : 0
+
+    const characterLimitReached = editor
+        ? editor.storage.characterCount.characters() === characterLimit
+        : false
+
     return (
         <Field required={required}>
             <Stack spacing={1}>
                 <Wrapper>
                     <Flex gap={1} alignItems={'flex-start'}>
-                        <Box
-                            hasRadius
-                            overflow={'hidden'}
-                            borderWidth="1px"
-                            borderStyle="solid"
-                            borderColor="neutral200"
-                            style={{ flex: '1' }}
-                        >
+                        <Box hasRadius overflow={'hidden'} style={{ flex: '1' }}>
                             <MenuBar
                                 editor={editor}
                                 debug={debug}
@@ -142,13 +152,73 @@ const Wysiwyg = ({
                                 playground={playground}
                             />
                             <Box
+                                className="editor-content-wrapper"
                                 padding={2}
                                 background="neutral0"
                                 maxHeight={'600px'}
+                                minHeight={'100px'}
                                 style={{ resize: 'vertical', overflow: 'auto' }}
                             >
                                 <EditorContent editor={editor} />
                             </Box>
+
+                            {editor && (
+                                <Box
+                                    marginTop={2}
+                                    className={[
+                                        'character-count',
+                                        characterLimitReached
+                                            ? 'character-count--warning'
+                                            : '',
+                                    ]}
+                                >
+                                    <Flex>
+                                        <Box marginRight={2}>
+                                            <svg
+                                                height="20"
+                                                width="20"
+                                                viewBox="0 0 20 20"
+                                                className="character-count__graph"
+                                            >
+                                                <circle
+                                                    className="character-count__background-cirle"
+                                                    r="10"
+                                                    cx="10"
+                                                    cy="10"
+                                                    fill="currentColor"
+                                                />
+                                                <circle
+                                                    r="5"
+                                                    cx="10"
+                                                    cy="10"
+                                                    fill="transparent"
+                                                    stroke="currentColor"
+                                                    strokeWidth="10"
+                                                    strokeDasharray={`calc(${percentage} * 31.4 / 100) 31.4`}
+                                                    transform="rotate(-90) translate(-20)"
+                                                />
+                                                <circle
+                                                    r="6"
+                                                    cx="10"
+                                                    cy="10"
+                                                    fill="white"
+                                                />
+                                            </svg>
+                                        </Box>
+                                        <Box>
+                                            <Typography>
+                                                {editor.storage.characterCount.characters()}
+                                                /{characterLimit} characters
+                                            </Typography>
+                                            <br />
+                                            <Typography>
+                                                {editor.storage.characterCount.words()}{' '}
+                                                words
+                                            </Typography>
+                                        </Box>
+                                    </Flex>
+                                </Box>
+                            )}
                         </Box>
                         {debug && playground && (
                             <Box
