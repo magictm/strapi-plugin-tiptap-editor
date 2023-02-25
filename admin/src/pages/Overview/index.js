@@ -172,7 +172,6 @@ const Overview = () => {
                                         id: 'asgasdffksd',
                                         defaultMessage: 'TipTap Editor',
                                     }}
-                                    value={''}
                                     playground
                                 ></WysiwygEditor>
                             </Box>

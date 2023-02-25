@@ -106,7 +106,8 @@ const Wysiwyg = ({
             }),
             HistoryExtension,
         ],
-        content: `<h2>Hi there,</h2> <p> this is a <em>basic</em> example of <strong>tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists: </p> <ul> <li> That's a bullet list with one … </li> <li> … or two list items. </li> </ul> <p> Isn't that great? And all of that is editable. But wait, there's more. Let's try a code block: </p> <pre><code class="language-css">body { display: none; }</code></pre> <p> I know, I know, this is impressive. It's only the tip of the iceberg though. Give it a try and click a little bit around. Don't forget to check the other examples too. </p> <blockquote> Wow, that's amazing. Good work, boy! 👏 <br /> — Mom </blockquote>`,
+
+        content,
 
         parseOptions: {
             preserveWhitespace: 'full',
@@ -115,29 +116,11 @@ const Wysiwyg = ({
         onBeforeCreate({ editor }) {},
 
         onUpdate({ editor }) {
-            console.log('onUpdate')
+            if (debug) console.log('onUpdate')
+
             onChange({ target: { name, value: editor.getHTML() } })
         },
     })
-
-    useEffect(() => {
-        if (editor === null) return
-
-        if (content === '') {
-            // Content can be 2 things: JSON or String. Be able to display both things.
-
-            try {
-                // If content is saved as json, parse it
-                const json = JSON.parse(value)
-                setContent(value)
-                editor.commands.setContent(json, false)
-            } catch (e) {
-                // Use value as is, the content hasn't been converted to json.
-                setContent(value)
-                editor.commands.setContent(value, false)
-            }
-        }
-    }, [editor])
 
     return (
         <Field required={required}>

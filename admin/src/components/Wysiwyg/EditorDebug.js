@@ -1,26 +1,70 @@
 import {
     Box,
-    Flex,
-    IconButton,
-    IconButtonGroup,
+    Button,
     Option,
     Select,
-    Button,
-    Switch,
-    Typography,
-    TabGroup,
-    Tabs,
-    TabPanels,
-    TabPanel,
     Tab,
+    TabGroup,
+    TabPanel,
+    TabPanels,
+    Tabs,
+    Typography,
 } from '@strapi/design-system'
-import { simpleData } from '../../utils/editorData'
+import {
+    knowledgeBaseArticleData,
+    simpleData,
+    blogPostData,
+    newsArticleData,
+    simpleWithImageData,
+    emailNewsletterData,
+    forumPostData,
+    recipeInstructionsData,
+    academicPaperData,
+    legalDocumentData,
+    codingTutorialData,
+} from '../../utils/editorData'
 
 import React, { useState } from 'react'
 
 const EditorDebug = ({ editor }) => {
+    const [selectedDataSet, setSelectedDataSet] = useState('simple')
+
     const insertEditorContent = () => {
-        editor.commands.setContent(simpleData, true)
+        let dataset = simpleData
+        switch (selectedDataSet) {
+            case 'simpleWithImage':
+                dataset = simpleWithImageData
+                break
+            case 'blogPost':
+                dataset = blogPostData
+                break
+            case 'newsArticle':
+                dataset = newsArticleData
+                break
+            case 'emailNewsletter':
+                dataset = emailNewsletterData
+                break
+            case 'forumPost':
+                dataset = forumPostData
+                break
+            case 'recipeInstructions':
+                dataset = recipeInstructionsData
+                break
+            case 'knowledgeBaseArticle':
+                dataset = knowledgeBaseArticleData
+                break
+            case 'academicPaper':
+                dataset = academicPaperData
+                break
+            case 'legalDocument':
+                dataset = legalDocumentData
+                break
+            case 'codingTutorial':
+                dataset = codingTutorialData
+                break
+        }
+
+        editor.commands.setContent(dataset, true)
     }
 
     return (
@@ -44,11 +88,67 @@ const EditorDebug = ({ editor }) => {
                 <TabPanels>
                     <TabPanel>
                         <Box color="neutral800" padding={4} background="neutral0">
+                            <Box>
+                                <Typography variant="delta">
+                                    Insert content
+                                </Typography>
+                            </Box>
+                            <Box marginTop={1}>
+                                <Typography variant="omega">
+                                    Sample Content for Testing WYSIWYG Editor
+                                </Typography>
+                            </Box>
+                            <Box
+                                className="button-group"
+                                marginBottom={2}
+                                marginTop={4}
+                            >
+                                <Select
+                                    id="insert-data"
+                                    label="Choose data set"
+                                    required={false}
+                                    size="S"
+                                    placeholder="Data set"
+                                    value={selectedDataSet}
+                                    onClear={() => setSelectedDataSet('simple')}
+                                    onChange={setSelectedDataSet}
+                                >
+                                    <Option value={'simple'}>Simple</Option>
+                                    <Option value={'simpleWithImage'}>
+                                        Simple with Image
+                                    </Option>
+                                    <Option value={'blogPost'}>Blog Post</Option>
+                                    <Option value={'newsArticle'}>
+                                        News Article
+                                    </Option>
+                                    <Option value={'emailNewsletter'}>
+                                        Email Newsletter
+                                    </Option>
+                                    <Option value={'forumPost'}>Forum Post</Option>
+                                    <Option value={'recipeInstructions'}>
+                                        Recipe Instruction
+                                    </Option>
+                                    <Option value={'knowledgeBaseArticle'}>
+                                        Knowledge Base Article
+                                    </Option>
+                                    <Option value={'academicPaper'}>
+                                        Academic Paper
+                                    </Option>
+                                    <Option value={'legalDocument'}>
+                                        Legal Document
+                                    </Option>
+                                    <Option value={'codingTutorial'}>
+                                        Coding Tutorial
+                                    </Option>
+                                </Select>
+                            </Box>
                             <Button onClick={insertEditorContent}>
                                 Insert content
                             </Button>
                             <Box marginTop={2}>
-                                <Typography>WIP</Typography>
+                                <Typography>
+                                    ⚠ This section is under development.
+                                </Typography>
                             </Box>
                         </Box>
                     </TabPanel>
