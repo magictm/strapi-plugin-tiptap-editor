@@ -4,40 +4,25 @@
  *
  */
 
-import React, { useState, useEffect, useRef } from 'react'
-import { useQuery, useMutation, useQueryClient } from 'react-query'
+import React, { useState } from 'react'
+import { useQuery } from 'react-query'
 // import PropTypes from 'prop-types';
 import WysiwygEditor from '../../components/Wysiwyg'
 
 import {
     Box,
-    Divider,
-    Button,
-    Typography,
-    Main,
-    HeaderLayout,
     ContentLayout,
-    Tabs,
-    Tab,
-    TabGroup,
-    TabPanels,
-    TabPanel,
-    Badge,
-    Status,
+    Divider,
     Flex,
+    HeaderLayout,
     Loader,
+    Main,
+    Status,
+    Typography,
 } from '@strapi/design-system'
-import { Formik } from 'formik'
-import {
-    Form,
-    LoadingIndicatorPage,
-    useNotification,
-    useOverlayBlocker,
-} from '@strapi/helper-plugin'
+import { LoadingIndicatorPage } from '@strapi/helper-plugin'
 
 const Overview = () => {
-    const toggleNotification = useNotification()
-
     const isLoading = false
     const [loadingUpdatesStatus, setLoadingUpdatesStatus] = useState(true)
 
@@ -48,24 +33,8 @@ const Overview = () => {
     const query = useQuery('settings', {})
 
     const onChange = (x) => {
-        console.log('onChange', x)
+        // console.log('onChange', x)
     }
-
-    // toggleNotification({
-    //     type: 'success',
-    //     message: {
-    //         id: 'strapi-tiptap-editor-save-success',
-    //         defaultMessage: 'Saved',
-    //     },
-    // })
-
-    // toggleNotification({
-    //     type: 'warning',
-    //     message: {
-    //         id: 'strapi-tiptap-editor-save-error',
-    //         defaultMessage: 'Saved failed',
-    //     },
-    // })
 
     return (
         <Main aria-busy={isLoading}>

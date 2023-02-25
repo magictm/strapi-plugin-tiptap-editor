@@ -170,6 +170,17 @@ export default styled(Box)`
                 font-size: 0.8rem;
             }
         }
+        code {
+            font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,
+                Liberation Mono, monospace;
+            padding: 0.2em 0.4em;
+            margin: 0;
+            font-size: 85%;
+            white-space: break-spaces;
+            border-radius: 6px;
+            background-color: rgba(175, 184, 193, 0.2);
+            box-decoration-break: clone;
+        }
         img {
             max-width: 100%;
             height: auto;

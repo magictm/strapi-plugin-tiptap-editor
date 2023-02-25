@@ -66,7 +66,7 @@ const Wysiwyg = (opts) => {
     } = opts
 
     // Debug
-    console.log('opts', opts)
+    // console.log('opts', opts)
 
     const { formatMessage } = useIntl()
     const [mediaLibVisible, setMediaLibVisible] = useState(false)
@@ -138,7 +138,7 @@ const Wysiwyg = (opts) => {
         onBeforeCreate({ editor }) {},
 
         onUpdate({ editor }) {
-            if (debug) console.log('onUpdate')
+            // if (debug) console.log('onUpdate')
 
             onChange({ target: { name, value: editor.getHTML() } })
         },

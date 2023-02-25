@@ -32,6 +32,7 @@ import {
     AiFillYoutube,
     AiOutlineLine,
 } from 'react-icons/ai'
+import { BiCodeBlock as BiCodeBlockIcon } from 'react-icons/bi'
 import { GrBlockQuote as GrBlockQuoteIcon } from 'react-icons/gr'
 import {
     HiArrowUturnLeft as UndoIcon,
@@ -145,7 +146,10 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
                             disabled={
                                 !editor.can().chain().focus().toggleBold().run()
                             }
-                            className={editor.isActive('bold') ? 'is-active' : ''}
+                            className={[
+                                'large-icon',
+                                editor.isActive('bold') ? 'is-active' : '',
+                            ]}
                         />
                         <IconButton
                             icon={<ItalicIcon />}
@@ -156,7 +160,10 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
                             disabled={
                                 !editor.can().chain().focus().toggleItalic().run()
                             }
-                            className={editor.isActive('italic') ? 'is-active' : ''}
+                            className={[
+                                'large-icon',
+                                editor.isActive('italic') ? 'is-active' : '',
+                            ]}
                         />
                         <IconButton
                             icon={<StrikeThroughIcon />}
@@ -167,16 +174,23 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
                             disabled={
                                 !editor.can().chain().focus().toggleStrike().run()
                             }
-                            className={editor.isActive('strike') ? 'is-active' : ''}
+                            className={[
+                                'large-icon',
+                                editor.isActive('strike') ? 'is-active' : '',
+                            ]}
                         />
                         <IconButton
                             icon={<UnderlineIcon />}
                             label="Underline"
-                            className={
-                                editor.isActive('underline') ? 'is-active' : ''
-                            }
+                            className={[
+                                'large-icon',
+                                editor.isActive('underline') ? 'is-active' : '',
+                            ]}
                             onClick={() =>
                                 editor.chain().focus().toggleUnderline().run()
+                            }
+                            disabled={
+                                !editor.can().chain().focus().toggleUnderline().run()
                             }
                         />
                     </IconButtonGroup>
@@ -189,6 +203,14 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
                             onClick={() =>
                                 editor.chain().focus().setTextAlign('left').run()
                             }
+                            disabled={
+                                !editor
+                                    .can()
+                                    .chain()
+                                    .focus()
+                                    .setTextAlign('left')
+                                    .run()
+                            }
                         />
                         <IconButton
                             icon={<AiOutlineAlignCenter />}
@@ -197,6 +219,14 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
                             onClick={() =>
                                 editor.chain().focus().setTextAlign('center').run()
                             }
+                            disabled={
+                                !editor
+                                    .can()
+                                    .chain()
+                                    .focus()
+                                    .setTextAlign('center')
+                                    .run()
+                            }
                         />
                         <IconButton
                             icon={<AiOutlineAlignRight />}
@@ -204,6 +234,14 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
                             className={'large-icon'}
                             onClick={() =>
                                 editor.chain().focus().setTextAlign('right').run()
+                            }
+                            disabled={
+                                !editor
+                                    .can()
+                                    .chain()
+                                    .focus()
+                                    .setTextAlign('right')
+                                    .run()
                             }
                         />
                     </IconButtonGroup>
@@ -219,6 +257,14 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
                             onClick={() =>
                                 editor.chain().focus().toggleBulletList().run()
                             }
+                            disabled={
+                                !editor
+                                    .can()
+                                    .chain()
+                                    .focus()
+                                    .toggleBulletList()
+                                    .run()
+                            }
                         />
                         <IconButton
                             icon={<NumberListIcon />}
@@ -230,6 +276,14 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
                             onClick={() =>
                                 editor.chain().focus().toggleOrderedList().run()
                             }
+                            disabled={
+                                !editor
+                                    .can()
+                                    .chain()
+                                    .focus()
+                                    .toggleOrderedList()
+                                    .run()
+                            }
                         />
                     </IconButtonGroup>
 
@@ -239,10 +293,25 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
                             label="Code"
                             className={[
                                 'large-icon',
+                                editor.isActive('code') ? 'is-active' : '',
+                            ]}
+                            onClick={() => editor.chain().focus().toggleCode().run()}
+                            disabled={
+                                !editor.can().chain().focus().toggleCode().run()
+                            }
+                        />
+                        <IconButton
+                            icon={<BiCodeBlockIcon />}
+                            label="Code Block"
+                            className={[
+                                'large-icon',
                                 editor.isActive('codeBlock') ? 'is-active' : '',
                             ]}
                             onClick={() =>
                                 editor.chain().focus().toggleCodeBlock().run()
+                            }
+                            disabled={
+                                !editor.can().chain().focus().toggleCodeBlock().run()
                             }
                         />
 

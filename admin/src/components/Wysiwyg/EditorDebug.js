@@ -73,6 +73,10 @@ const EditorDebug = ({ editor }) => {
         editor.commands.setContent(dataset, true)
     }
 
+    const tabChangedEvent = (selected) => {
+        // console.log(selected)
+    }
+
     return (
         <Box
             padding={2}
@@ -82,9 +86,9 @@ const EditorDebug = ({ editor }) => {
         >
             <TabGroup
                 className="tab-wrapper"
-                label="Some stuff for the label"
+                label=""
                 id="tabs"
-                onTabChange={(selected) => console.log(selected)}
+                onTabChange={tabChangedEvent}
             >
                 <Tabs>
                     <Tab>Options</Tab>
