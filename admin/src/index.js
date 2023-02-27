@@ -44,16 +44,16 @@ export default {
                     Component: overviewPageComponent,
                     permissions: [],
                 },
-                {
-                    intlLabel: {
-                        id: getTrad('settings.menu.settings'),
-                        defaultMessage: 'Settings',
-                    },
-                    id: 'settings',
-                    to: '/settings/tiptap-editor/settings',
-                    Component: settingsPageComponent,
-                    permissions: [],
-                },
+                // {
+                //     intlLabel: {
+                //         id: getTrad('settings.menu.settings'),
+                //         defaultMessage: 'Settings',
+                //     },
+                //     id: 'settings',
+                //     to: '/settings/tiptap-editor/settings',
+                //     Component: settingsPageComponent,
+                //     permissions: [],
+                // },
             ],
         )
 

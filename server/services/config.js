@@ -13,9 +13,7 @@ module.exports = ({ strapi }) => {
     // Create default settings
     const createDefaultConfig = async () => {
         const pluginStore = getPluginStore()
-        const value = {
-            test: 'to jest testowy konfig',
-        }
+        const value = {}
         await pluginStore.set({ key: 'settings', value })
         return pluginStore.get({ key: 'settings' })
     }
