@@ -1,3 +1,3 @@
 module.exports = {
-    settings: require('./settings'),
+    config: require('./config'),
 }

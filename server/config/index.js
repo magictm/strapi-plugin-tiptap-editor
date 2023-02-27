@@ -3,7 +3,7 @@
 const Joi = require('joi')
 
 const configSchema = Joi.object({
-    username: Joi.string(),
+    // TODO
 })
 
 module.exports = {

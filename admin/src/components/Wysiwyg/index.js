@@ -92,7 +92,6 @@ const Wysiwyg = (opts) => {
             OrderedListExtension,
             HeadingExtension,
             UnderlineExtension,
-            CodeExtension,
             LinkExtension,
             ImageExtension,
             TextAlignExtension.configure({

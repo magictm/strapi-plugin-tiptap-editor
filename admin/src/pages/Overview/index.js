@@ -26,11 +26,7 @@ const Overview = () => {
     const isLoading = false
     const [loadingUpdatesStatus, setLoadingUpdatesStatus] = useState(true)
 
-    setTimeout(() => {
-        setLoadingUpdatesStatus(false)
-    }, 2000)
-
-    const query = useQuery('settings', {})
+    // const query = useQuery('settings', {})
 
     const onChange = (x) => {
         // console.log('onChange', x)
@@ -69,7 +65,7 @@ const Overview = () => {
                                         </Typography>
                                     </Typography>
 
-                                    {loadingUpdatesStatus ? (
+                                    {/* {loadingUpdatesStatus ? (
                                         <Box marginLeft={2}>
                                             <Loader small>
                                                 Checking updates...
@@ -85,7 +81,7 @@ const Overview = () => {
                                                 Latest
                                             </Status>
                                         </Box>
-                                    )}
+                                    )} */}
                                     {/* <Box marginLeft={2}>
                                         <Status
                                             variant="danger"

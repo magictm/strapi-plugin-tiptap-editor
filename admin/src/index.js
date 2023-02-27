@@ -8,9 +8,9 @@ import WysiwygComponent from './components/Wysiwyg'
 
 const name = pluginPkg.strapi.name
 
-const homePageComponent = async () => {
+const settingsPageComponent = async () => {
     const component = await import(
-        /* webpackChunkName: "strapi-plugin-tiptap-settings-homepage-page" */ './pages/HomePage'
+        /* webpackChunkName: "strapi-plugin-tiptap-settings-homepage-page" */ './pages/Settings'
     )
 
     return component
@@ -51,7 +51,7 @@ export default {
                     },
                     id: 'settings',
                     to: '/settings/tiptap-editor/settings',
-                    Component: homePageComponent,
+                    Component: settingsPageComponent,
                     permissions: [],
                 },
             ],
