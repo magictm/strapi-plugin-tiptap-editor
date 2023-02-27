@@ -1,15 +1,15 @@
 {
     "name": "@magictm/strapi-plugin-tiptap-editor",
     "version": "0.1.0",
-    "description": "Replaces default Strapi editor with TipTap editor.",
+    "description": "Replaces default Strapi editor with Tiptap editor.",
     "scripts": {
         "npm:publish": "npm publish --access public"
     },
     "strapi": {
-        "name": "strapi-plugin-tiptap",
-        "description": "Replaces default Strapi editor with TipTap editor.",
+        "name": "tiptap-editor",
+        "description": "Replaces default Strapi editor with Tiptap editor.",
         "kind": "plugin",
-        "displayName": "Strapi Plugin Tiptap"
+        "displayName": "MagicTM · Tiptap Editor"
     },
     "dependencies": {
         "@tiptap/extension-blockquote": "^2.0.0-beta.218",
@@ -44,6 +44,7 @@
         "@tiptap/extension-youtube": "^2.0.0-beta.218",
         "@tiptap/pm": "^2.0.0-beta.218",
         "@tiptap/react": "^2.0.0-beta.218",
+        "joi": "^17.8.3",
         "react-icons": "^4.7.1"
     },
     "author": {
