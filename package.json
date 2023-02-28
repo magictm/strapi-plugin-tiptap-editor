@@ -1,6 +1,6 @@
 {
     "name": "@magictm/strapi-plugin-tiptap-editor",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "Replaces default Strapi editor with Tiptap editor.",
     "scripts": {
         "npm:publish": "npm publish --access public"
