@@ -1,12 +1,16 @@
-# 📦 MagicTM Tiptap Editor Strapi Plugin
+# MagicTM · Tiptap Editor · Strapi Plugin
 
-🎨 The MagicTM Tiptap Editor Strapi Plugin is a customizable WYSIWYG editor built on top of Strapi's default editor. It provides a beautiful and intuitive editing experience for your content creators.
+🎨 The MagicTM Tiptap Editor Strapi Plugin is a customizable WYSIWYG editor which replaces Strapi's default editor. It provides a beautiful and intuitive editing experience for your content creators. It is only available for Strapi v4.
 
 ![Preview Image](https://via.placeholder.com/800x400)
 
 🌐 Follow me: https://stawowczyk.me
 
 > 🚨 Note: This plugin is in alpha stage and should not be used in production.
+
+## ⛓ Versions
+
+Strapi v4 - (current) - v0.x
 
 ## 💻 Install
 
@@ -76,4 +80,6 @@ If you find this plugin helpful, please consider supporting my work by buying me
 
 Thank you for using the MagicTM Tiptap Editor Strapi Plugin!
 
-## 📜 License: LGPL-2.1 License © 2023-PRESENT Marcin Stawowczyk (m7rlin)
+## 📜 License
+
+LGPL-2.1 License © 2023-PRESENT Marcin Stawowczyk (m7rlin)
