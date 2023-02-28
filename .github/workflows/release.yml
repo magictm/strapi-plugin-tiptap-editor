@@ -25,7 +25,6 @@ jobs:
           registry-url: https://registry.npmjs.org
       - name: 🚀 publish to NPM
         run: npm publish --access public
-        working-directory: strapi-plugin-tiptap-editor
         env:
             NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
     
