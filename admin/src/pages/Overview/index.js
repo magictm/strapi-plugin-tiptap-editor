@@ -32,6 +32,8 @@ const Overview = () => {
         // console.log('onChange', x)
     }
 
+    const editorContent = ''
+
     return (
         <Main aria-busy={isLoading}>
             <HeaderLayout
@@ -133,6 +135,7 @@ const Overview = () => {
                                 <WysiwygEditor
                                     name={'playground'}
                                     onChange={onChange}
+                                    value={editorContent}
                                     intlLabel={{
                                         id: 'asgasdffksd',
                                         defaultMessage: 'TipTap Editor',

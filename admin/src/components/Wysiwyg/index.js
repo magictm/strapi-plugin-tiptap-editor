@@ -72,7 +72,7 @@ const Wysiwyg = (opts) => {
     const [mediaLibVisible, setMediaLibVisible] = useState(false)
     const [debug, setDebug] = useState(false)
     const [hasDebug, setHasDebug] = useState(false)
-    const [content, setContent] = useState('')
+    const [content, setContent] = useState(value || '')
 
     const characterLimit = attribute?.maxLength || 0
 
@@ -142,6 +142,15 @@ const Wysiwyg = (opts) => {
             onChange({ target: { name, value: editor.getHTML() } })
         },
     })
+
+    useEffect(() => {
+        if (!editor) return
+
+        if (content === '') {
+            setContent(value)
+            editor.commands.setContent(value, false)
+        }
+    }, [editor])
 
     return (
         <Field required={required}>
