@@ -36,13 +36,13 @@ The MagicTM Tiptap Editor Strapi Plugin is fully customizable. To configure the 
 -   Create custom extensions for the editor
 -   Use content templates to provide fast and consistent content creation
 
-# 📋 TODO:
+## 📋 TODO:
 
--   [] Config settings
--   [] Settings page for customization
--   [] More extensions
--   [] Custom extensions
--   [] Content templates for faster usage
+-   [ ] Config settings
+-   [ ] Settings page for customization
+-   [ ] More extensions
+-   [ ] Custom extensions
+-   [ ] Content templates for faster usage
 
 ## 🤝 Contributing
 
