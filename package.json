@@ -59,5 +59,22 @@
         "node": ">=14.19.1 <=18.x.x",
         "npm": ">=6.0.0"
     },
-    "license": "LGPL-2.1"
+    "license": "LGPL-2.1",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/magictm/strapi-plugin-tiptap-editor.git"
+    },
+    "bugs": {
+        "url": "https://github.com/magictm/strapi-plugin-tiptap-editor/issues"
+    },
+    "homepage": "https://github.com/magictm/strapi-plugin-tiptap-editor#readme",
+    "keywords": [
+        "strapi",
+        "strapi v4",
+        "strapi plugin",
+        "strapi tiprap editor",
+        "tiptap",
+        "tiptap editor",
+        "magictm"
+    ]
 }

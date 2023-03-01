@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="a" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <defs>
+    <style>
+      .c {
+        fill: #fff;
+      }
+
+      .d {
+        fill: none;
+      }
+
+      .d, .e {
+        stroke: #231f20;
+        stroke-miterlimit: 10;
+        stroke-width: 16px;
+      }
+
+      .e {
+        fill: #7968ae;
+      }
+
+      .f {
+        fill: #010101;
+      }
+    </style>
+  </defs>
+  <rect id="b" data-name="bg" class="c" width="500" height="500"/>
+  <rect class="d" x="31.54" y="31.12" width="440.21" height="440.21" rx="15.72" ry="15.72"/>
+  <circle class="e" cx="54.25" cy="53.83" r="22.71"/>
+  <circle class="e" cx="449.04" cy="448.62" r="22.71"/>
+  <path class="f" d="m91.9,178.76h38.9v-38.9h63.25l-50.02,233.38h-52.12v38.9h155.59v-38.9h-43.8l50.02-233.38h71.57v38.9h38.9v-77.79H91.9v77.79Z"/>
+  <path class="f" d="m364.79,265.61v146.53h-19.54v-146.53h-58.61v-19.54h136.76v19.54h-58.61Z"/>
+</svg>
