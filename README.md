@@ -1,4 +1,12 @@
-# MagicTM · Tiptap Editor · Strapi Plugin
+<h1 align='center'>MagicTM · Tiptap Editor · Strapi Plugin</h1>
+
+<p align="center">
+<a href='#'>
+</a>
+<a href="https://www.npmjs.com/package/nuxt-unhead" target="__blank"><img alt="NPM version" src="https://img.shields.io/npm/v/@magictm/strapi-plugin-tiptap-editor?flat&colorA=0e0a18&colorB=8c67ef"></a>
+<a href="https://www.npmjs.com/package/nuxt-unhead" target="__blank"><img alt="NPM Downloads" src="https://img.shields.io/npm/dm/@magictm/strapi-plugin-tiptap-editor?flat&colorA=1f1733&colorB=8c67ef"></a>
+<a href="https://github.com/magictm/strapi-plugin-tiptap-editor" target="__blank"><img alt="GitHub stars" src="https://img.shields.io/github/stars/magictm/strapi-plugin-tiptap-editor?colorA=0e0a18&colorB=8c67ef"></a>
+</p>
 
 🎨 The MagicTM Tiptap Editor Strapi Plugin is a customizable WYSIWYG editor which replaces Strapi's default editor. It provides a beautiful and intuitive editing experience for your content creators. It is only available for Strapi v4.
 
